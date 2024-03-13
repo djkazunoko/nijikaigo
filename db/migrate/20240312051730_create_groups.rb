@@ -1,12 +1,12 @@
 class CreateGroups < ActiveRecord::Migration[7.1]
   def change
     create_table :groups do |t|
-      t.string :hashtag
-      t.string :name
-      t.text :details
-      t.integer :capacity
-      t.string :location
-      t.string :payment_method
+      t.string :hashtag, null: false
+      t.string :name, null: false
+      t.text :details, null: false
+      t.integer :capacity, null: false
+      t.string :location, null: false
+      t.string :payment_method, null: false
 
       t.timestamps
     end
