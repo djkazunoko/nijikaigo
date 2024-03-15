@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Group < ApplicationRecord
   validates :hashtag, presence: true
   validates :name, presence: true
