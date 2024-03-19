@@ -17,13 +17,8 @@ RSpec.describe "/groups", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Group. As you add validations to Group, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:valid_attributes) { FactoryBot.attributes_for(:group) }
+  let(:invalid_attributes) { FactoryBot.attributes_for(:group, :invalid) }
 
   describe "GET /index" do
     it "renders a successful response" do
@@ -88,15 +83,13 @@ RSpec.describe "/groups", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) { FactoryBot.attributes_for(:group, name: 'New Group Name') }
 
       it "updates the requested group" do
         group = Group.create! valid_attributes
         patch group_url(group), params: { group: new_attributes }
         group.reload
-        skip("Add assertions for updated state")
+        expect(group.name).to eq 'New Group Name'
       end
 
       it "redirects to the group" do
