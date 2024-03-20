@@ -8,5 +8,9 @@ FactoryBot.define do
     capacity { 10 }
     location { '未定' }
     payment_method { '割り勘' }
+
+    trait :invalid do
+      hashtag { nil }
+    end
   end
 end
