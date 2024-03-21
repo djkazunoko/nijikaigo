@@ -6,29 +6,39 @@
         - group.errors.each do |error|
           li = error.full_message
 
-  div
+  div.mb-4
     = form.label :hashtag, style: 'display: block'
     = form.text_field :hashtag
+    p.text-gray-400.text-sm
+      | 現在参加しているイベントのハッシュタグを入力してください。
 
-  div
+  div.mb-4
     = form.label :name, style: 'display: block'
     = form.text_field :name
+    p.text-gray-400.text-sm
+      | 2次会のテーマを含む名前がおすすめです。
 
-  div
+  div.mb-4
     = form.label :details, style: 'display: block'
     = form.text_area :details
+    p.text-gray-400.text-sm
+      | どんな人に参加して欲しいですか？どんな2次会を開催予定ですか？<br>例）女性限定、イベントの参加者で交流したい！
 
-  div
+  div.mb-4
     = form.label :capacity, style: 'display: block'
     = form.number_field :capacity
 
-  div
+  div.mb-4
     = form.label :location, style: 'display: block'
     = form.text_field :location
+    p.text-gray-400.text-sm
+      | 例）〇〇駅周辺の居酒屋
 
-  div
+  div.mb-4
     = form.label :payment_method, style: 'display: block'
     = form.text_field :payment_method
+    p.text-gray-400.text-sm
+      | トラブル防止のため、事前に会計方法を決めておきましょう。<br>例）乾杯前に3000円集金します、個別会計
 
   div
     = form.submit
