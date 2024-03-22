@@ -38,7 +38,7 @@ RSpec.describe 'Groups', type: :system do
         fill_in '会計方法', with: '割り勘'
         click_button '登録する'
 
-        expect(page).to have_content '1 error prohibited this group from being saved'
+        expect(page).to have_content '2次会グループに1個のエラーが発生しました'
         expect(page).to have_content 'イベントのハッシュタグを入力してください'
         expect(page).to have_current_path(new_group_path)
       end
