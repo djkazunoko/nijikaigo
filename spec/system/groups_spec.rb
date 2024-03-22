@@ -17,7 +17,7 @@ RSpec.describe 'Groups', type: :system do
           fill_in '会計方法', with: '割り勘'
           click_button '登録する'
 
-          expect(page).to have_content 'Group was successfully created.'
+          expect(page).to have_content '2次会グループが作成されました'
           expect(page).to have_content 'rubykaigi'
           expect(page).to have_current_path(group_path(Group.last))
         end.to change(Group, :count).by(1)
