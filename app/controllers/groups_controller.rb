@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
   def destroy
     @group.destroy!
 
-    redirect_to groups_url, notice: 'Group was successfully destroyed.'
+    redirect_to groups_url, notice: '2次会グループが削除されました'
   end
 
   private
