@@ -46,4 +46,38 @@ RSpec.describe 'Groups', type: :system do
       end
     end
   end
+
+  describe 'updating a group' do
+    let(:group) { FactoryBot.create(:group) }
+
+    context 'with valid input' do
+      it 'updates the group' do
+        visit group_path(group)
+        click_link 'Edit this group'
+        expect(page).to have_current_path(edit_group_path(group))
+
+        fill_in '会場', with: 'とある居酒屋'
+        click_button '更新する'
+
+        expect(page).to have_content '2次会グループが更新されました'
+        expect(page).to have_content 'とある居酒屋'
+        expect(page).to have_current_path(group_path(group))
+      end
+    end
+
+    context 'with invalid input' do
+      it 'displays an error message' do
+        visit group_path(group)
+        click_link 'Edit this group'
+        expect(page).to have_current_path(edit_group_path(group))
+
+        fill_in '会場', with: ''
+        click_button '更新する'
+
+        expect(page).to have_content '2次会グループに1個のエラーが発生しました'
+        expect(page).to have_content '会場を入力してください'
+        expect(page).to have_current_path(edit_group_path(group))
+      end
+    end
+  end
 end
