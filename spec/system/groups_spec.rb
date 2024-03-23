@@ -32,17 +32,19 @@ RSpec.describe 'Groups', type: :system do
         click_link 'New group'
         expect(page).to have_current_path(new_group_path)
 
-        fill_in 'イベントのハッシュタグ', with: ''
-        fill_in '2次会グループ名', with: 'みんなで飲みましょう!!'
-        fill_in '募集内容', with: '誰でも参加OK!!'
-        fill_in '定員', with: 10
-        fill_in '会場', with: '未定'
-        fill_in '会計方法', with: '割り勘'
-        click_button '登録する'
+        expect do
+          fill_in 'イベントのハッシュタグ', with: ''
+          fill_in '2次会グループ名', with: 'みんなで飲みましょう!!'
+          fill_in '募集内容', with: '誰でも参加OK!!'
+          fill_in '定員', with: 10
+          fill_in '会場', with: '未定'
+          fill_in '会計方法', with: '割り勘'
+          click_button '登録する'
 
-        expect(page).to have_content '2次会グループに1個のエラーが発生しました'
-        expect(page).to have_content 'イベントのハッシュタグを入力してください'
-        expect(page).to have_current_path(new_group_path)
+          expect(page).to have_content '2次会グループに1個のエラーが発生しました'
+          expect(page).to have_content 'イベントのハッシュタグを入力してください'
+          expect(page).to have_current_path(new_group_path)
+        end.not_to change(Group, :count)
       end
     end
   end
