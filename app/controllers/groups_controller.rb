@@ -27,7 +27,7 @@ class GroupsController < ApplicationController
 
   def update
     if @group.update(group_params)
-      redirect_to group_url(@group), notice: 'Group was successfully updated.'
+      redirect_to group_url(@group), notice: '2次会グループが更新されました'
     else
       render :edit, status: :unprocessable_entity
     end
