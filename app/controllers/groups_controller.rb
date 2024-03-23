@@ -19,7 +19,7 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
 
     if @group.save
-      redirect_to group_url(@group), notice: 'Group was successfully created.'
+      redirect_to group_url(@group), notice: '2次会グループが作成されました'
     else
       render :new, status: :unprocessable_entity
     end

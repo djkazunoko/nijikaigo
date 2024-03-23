@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    models:
+      group: 2次会グループ
+    attributes:
+      group:
+        hashtag: イベントのハッシュタグ
+        name: 2次会グループ名
+        details: 募集内容
+        capacity: 定員
+        location: 会場
+        payment_method: 会計方法
