@@ -32,7 +32,7 @@ RSpec.describe 'Groups', type: :system do
         click_link 'New group'
         expect(page).to have_current_path(new_group_path)
 
-        fill_in 'イベントのハッシュタグ', with: nil
+        fill_in 'イベントのハッシュタグ', with: ''
         fill_in '2次会グループ名', with: 'みんなで飲みましょう!!'
         fill_in '募集内容', with: '誰でも参加OK!!'
         fill_in '定員', with: 10
