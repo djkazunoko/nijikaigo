@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Groups', type: :system do
+  let(:group) { FactoryBot.create(:group) }
+
   describe 'creating a new group' do
     context 'with valid input' do
       it 'creates the group' do
@@ -50,8 +52,6 @@ RSpec.describe 'Groups', type: :system do
   end
 
   describe 'updating a group' do
-    let(:group) { FactoryBot.create(:group) }
-
     context 'with valid input' do
       it 'updates the group' do
         visit group_path(group)
@@ -80,6 +80,22 @@ RSpec.describe 'Groups', type: :system do
         expect(page).to have_content '会場を入力してください'
         expect(page).to have_current_path(edit_group_path(group))
       end
+    end
+  end
+
+  describe 'deleting a group' do
+    it 'deletes the group' do
+      visit group_path(group)
+
+      expect do
+        accept_confirm do
+          click_button 'Destroy this group'
+        end
+
+        expect(page).to have_content '2次会グループが削除されました'
+        expect(page).not_to have_content 'rubykaigi'
+        expect(page).to have_current_path(groups_path)
+      end.to change(Group, :count).by(-1)
     end
   end
 end
