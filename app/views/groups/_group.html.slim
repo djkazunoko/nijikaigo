@@ -1,19 +1,13 @@
 div id="#{dom_id group}"
   p
-    strong Hashtag:
-    =< group.hashtag
+    = "#{group.hashtag} の2次会"
   p
-    strong Name:
-    =< group.name
+    = group.name
   p
-    strong Details:
-    =< group.details
+    = "#{Group.human_attribute_name('details')}: #{group.details}"
   p
-    strong Capacity:
-    =< group.capacity
+    = "参加者: 0 / #{group.capacity}人"
   p
-    strong Location:
-    =< group.location
+    = "#{Group.human_attribute_name('location')}: #{group.location}"
   p
-    strong Payment method:
-    =< group.payment_method
+    = "#{Group.human_attribute_name('payment_method')}: #{group.payment_method}"

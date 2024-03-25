@@ -55,7 +55,7 @@ RSpec.describe 'Groups', type: :system do
     context 'with valid input' do
       it 'updates the group' do
         visit group_path(group)
-        click_link 'Edit this group'
+        click_link '編集'
         expect(page).to have_current_path(edit_group_path(group))
 
         fill_in '会場', with: 'とある居酒屋'
@@ -70,7 +70,7 @@ RSpec.describe 'Groups', type: :system do
     context 'with invalid input' do
       it 'displays an error message' do
         visit group_path(group)
-        click_link 'Edit this group'
+        click_link '編集'
         expect(page).to have_current_path(edit_group_path(group))
 
         fill_in '会場', with: ''
@@ -89,7 +89,7 @@ RSpec.describe 'Groups', type: :system do
 
       expect do
         accept_confirm do
-          click_button 'Destroy this group'
+          click_button '削除'
         end
 
         expect(page).to have_content '2次会グループが削除されました'
