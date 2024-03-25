@@ -9,7 +9,7 @@ RSpec.describe 'Groups', type: :system do
     context 'with valid input' do
       it 'creates the group' do
         visit root_path
-        click_link 'New group'
+        click_link '2次会グループを作成'
         expect(page).to have_current_path(new_group_path)
 
         expect do
@@ -31,7 +31,7 @@ RSpec.describe 'Groups', type: :system do
     context 'with invalid input' do
       it 'displays an error message' do
         visit root_path
-        click_link 'New group'
+        click_link '2次会グループを作成'
         expect(page).to have_current_path(new_group_path)
 
         expect do
