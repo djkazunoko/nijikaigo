@@ -1,11 +1,28 @@
 p style="color: green" = notice
 
-h1 Groups
+h1.text-3xl.font-bold.mb-4
+  | 2次会GO！
+
+p.mb-4
+  | 2次会GO！は、テック系イベントの二次会参加者を簡単に集めることができる、二次会参加者募集ツールです。
+
+.mb-4
+  = link_to '2次会グループを作成', new_group_path
+
+p.text-xl.font-bold.mb-4
+  | 2次会グループ一覧
 
 #groups
   - @groups.each do |group|
-    == render group
     p
-      = link_to 'Show this group', group
-
-= link_to 'New group', new_group_path
+      = "#{group.hashtag} の2次会"
+    p
+      = group.name
+    p
+      = group.details
+    p
+      = "0 / #{group.capacity}人"
+    p
+      = "▼ #{group.location}"
+    p.mb-4
+      = link_to '詳細を見る', group
