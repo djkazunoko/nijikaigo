@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :user do
-    provider { "MyString" }
-    uid { "MyString" }
-    name { "MyString" }
-    image_url { "MyString" }
+    provider { 'github' }
+    uid { '0001' }
+    name { 'tester1' }
+    image_url { 'example.com/1' }
   end
 end
