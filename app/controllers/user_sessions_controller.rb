@@ -6,4 +6,9 @@ class UserSessionsController < ApplicationController
     session[:user_id] = user.id
     redirect_to new_group_path, notice: 'ログインしました'
   end
+
+  def destroy
+    reset_session
+    redirect_to root_path, notice: 'ログアウトしました'
+  end
 end

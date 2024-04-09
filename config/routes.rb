@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "groups#index"
   get "auth/:provider/callback" => "user_sessions#create"
+  delete "/logout" => "user_sessions#destroy"
 end

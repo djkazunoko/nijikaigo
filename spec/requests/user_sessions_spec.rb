@@ -48,4 +48,18 @@ RSpec.describe 'UserSessions', type: :request do
       end
     end
   end
+
+  describe 'DELETE /destroy' do
+    it 'removes user id from session' do
+      get '/auth/github/callback'
+      expect(session[:user_id]).to be_present
+      delete '/logout'
+      expect(session[:user_id]).to be_nil
+    end
+
+    it 'redirects to root_path' do
+      delete '/logout'
+      expect(response).to redirect_to(root_path)
+    end
+  end
 end
