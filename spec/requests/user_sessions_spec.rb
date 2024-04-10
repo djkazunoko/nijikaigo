@@ -62,4 +62,11 @@ RSpec.describe 'UserSessions', type: :request do
       expect(response).to redirect_to(root_path)
     end
   end
+
+  describe 'GET /failure' do
+    it 'redirects to root_path' do
+      get '/auth/failure'
+      expect(response).to redirect_to(root_path)
+    end
+  end
 end
