@@ -9,6 +9,11 @@ p.mb-4
 .mb-4
   = link_to '2次会グループを作成', new_group_path
 
+.mb-4
+  = button_to 'サインアップ / ログインをして2次会グループを作成', '/auth/github', data: { turbo: false }
+  span.text-xs
+    | GitHubアカウントが必要です
+
 p.text-xl.font-bold.mb-4
   | 2次会グループ一覧
 

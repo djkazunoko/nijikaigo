@@ -7,54 +7,107 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
 
-  it 'is invalid without a provider' do
-    user.provider = nil
-    user.valid?
-    expect(user.errors[:provider]).to include('を入力してください')
+  describe 'validations' do
+    it 'is invalid without a provider' do
+      user.provider = nil
+      user.valid?
+      expect(user.errors[:provider]).to include('を入力してください')
+    end
+
+    it 'is invalid without a uid' do
+      user.uid = nil
+      user.valid?
+      expect(user.errors[:uid]).to include('を入力してください')
+    end
+
+    it 'is invalid without a name' do
+      user.name = nil
+      user.valid?
+      expect(user.errors[:name]).to include('を入力してください')
+    end
+
+    it 'is invalid without an image_url' do
+      user.image_url = nil
+      user.valid?
+      expect(user.errors[:image_url]).to include('を入力してください')
+    end
+
+    it 'is invalid with a duplicate name' do
+      FactoryBot.create(:user)
+      user2 = FactoryBot.build(:user, image_url: 'example.com/2', provider: 'twitter', uid: '0002')
+      user2.valid?
+      expect(user2.errors[:name]).to include('はすでに存在します')
+    end
+
+    it 'is invalid with a duplicate image_url' do
+      FactoryBot.create(:user)
+      user2 = FactoryBot.build(:user, name: 'tester2', provider: 'twitter', uid: '0002')
+      user2.valid?
+      expect(user2.errors[:image_url]).to include('はすでに存在します')
+    end
+
+    it 'is invalid with a duplicate uid and provider pair' do
+      FactoryBot.create(:user)
+      user2 = FactoryBot.build(:user, name: 'tester2', image_url: 'example.com/2')
+      user2.valid?
+      expect(user2.errors[:uid]).to include('はすでに存在します')
+    end
+
+    it 'allows duplicate uid with different provider' do
+      FactoryBot.create(:user)
+      user2 = FactoryBot.build(:user, name: 'tester2', image_url: 'example.com/2', provider: 'twitter')
+      expect(user2).to be_valid
+    end
   end
 
-  it 'is invalid without a uid' do
-    user.uid = nil
-    user.valid?
-    expect(user.errors[:uid]).to include('を入力してください')
-  end
+  describe '.find_or_create_from_auth_hash!' do
+    let(:auth_hash) do
+      {
+        provider: 'github',
+        uid: '0001',
+        info: {
+          nickname: 'testuser',
+          image: 'https://example.com/testuser.png'
+        }
+      }
+    end
 
-  it 'is invalid without a name' do
-    user.name = nil
-    user.valid?
-    expect(user.errors[:name]).to include('を入力してください')
-  end
+    context 'when user does not exist' do
+      it 'creates a new user' do
+        expect do
+          User.find_or_create_from_auth_hash!(auth_hash)
+        end.to change(User, :count).by(1)
+      end
 
-  it 'is invalid without an image_url' do
-    user.image_url = nil
-    user.valid?
-    expect(user.errors[:image_url]).to include('を入力してください')
-  end
+      it 'returns the created user' do
+        user = User.find_or_create_from_auth_hash!(auth_hash)
+        expect(user).to have_attributes(
+          provider: 'github',
+          uid: '0001',
+          name: 'testuser',
+          image_url: 'https://example.com/testuser.png'
+        )
+      end
+    end
 
-  it 'is invalid with a duplicate name' do
-    FactoryBot.create(:user)
-    user2 = FactoryBot.build(:user, image_url: 'example.com/2', provider: 'twitter', uid: '0002')
-    user2.valid?
-    expect(user2.errors[:name]).to include('はすでに存在します')
-  end
+    context 'when user already exists' do
+      let!(:existing_user) { FactoryBot.create(:user) }
 
-  it 'is invalid with a duplicate image_url' do
-    FactoryBot.create(:user)
-    user2 = FactoryBot.build(:user, name: 'tester2', provider: 'twitter', uid: '0002')
-    user2.valid?
-    expect(user2.errors[:image_url]).to include('はすでに存在します')
-  end
+      it 'does not create a new user' do
+        expect do
+          User.find_or_create_from_auth_hash!(auth_hash)
+        end.not_to change(User, :count)
+      end
 
-  it 'is invalid with a duplicate uid and provider pair' do
-    FactoryBot.create(:user)
-    user2 = FactoryBot.build(:user, name: 'tester2', image_url: 'example.com/2')
-    user2.valid?
-    expect(user2.errors[:uid]).to include('はすでに存在します')
-  end
-
-  it 'allows duplicate uid with different provider' do
-    FactoryBot.create(:user)
-    user2 = FactoryBot.build(:user, name: 'tester2', image_url: 'example.com/2', provider: 'twitter')
-    expect(user2).to be_valid
+      it 'returns the existing user' do
+        user = User.find_or_create_from_auth_hash!(auth_hash)
+        expect(user).to have_attributes(
+          provider: 'github',
+          uid: '0001',
+          name: 'tester1',
+          image_url: 'example.com/1'
+        )
+      end
+    end
   end
 end
