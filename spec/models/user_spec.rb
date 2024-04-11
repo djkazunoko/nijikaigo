@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -75,12 +77,12 @@ RSpec.describe User, type: :model do
     context 'when user does not exist' do
       it 'creates a new user' do
         expect do
-          User.find_or_create_from_auth_hash!(auth_hash)
-        end.to change(User, :count).by(1)
+          described_class.find_or_create_from_auth_hash!(auth_hash)
+        end.to change(described_class, :count).by(1)
       end
 
       it 'returns the created user' do
-        user = User.find_or_create_from_auth_hash!(auth_hash)
+        user = described_class.find_or_create_from_auth_hash!(auth_hash)
         expect(user).to have_attributes(
           provider: 'github',
           uid: '0001',
@@ -91,16 +93,16 @@ RSpec.describe User, type: :model do
     end
 
     context 'when user already exists' do
-      let!(:existing_user) { FactoryBot.create(:user) }
+      before { FactoryBot.create(:user) }
 
       it 'does not create a new user' do
         expect do
-          User.find_or_create_from_auth_hash!(auth_hash)
-        end.not_to change(User, :count)
+          described_class.find_or_create_from_auth_hash!(auth_hash)
+        end.not_to change(described_class, :count)
       end
 
       it 'returns the existing user' do
-        user = User.find_or_create_from_auth_hash!(auth_hash)
+        user = described_class.find_or_create_from_auth_hash!(auth_hash)
         expect(user).to have_attributes(
           provider: 'github',
           uid: '0001',
