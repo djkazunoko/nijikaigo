@@ -5,11 +5,15 @@ require 'rails_helper'
 RSpec.describe 'Groups', type: :system do
   let(:group) { FactoryBot.create(:group) }
 
+  before do
+    Rails.application.env_config['omniauth.auth'] = github_mock
+  end
+
   describe 'creating a new group' do
     context 'with valid input' do
       it 'creates the group' do
         visit root_path
-        click_link '2次会グループを作成'
+        click_button 'サインアップ / ログインをして2次会グループを作成'
         expect(page).to have_current_path(new_group_path)
 
         expect do
@@ -31,7 +35,7 @@ RSpec.describe 'Groups', type: :system do
     context 'with invalid input' do
       it 'displays an error message' do
         visit root_path
-        click_link '2次会グループを作成'
+        click_button 'サインアップ / ログインをして2次会グループを作成'
         expect(page).to have_current_path(new_group_path)
 
         expect do
