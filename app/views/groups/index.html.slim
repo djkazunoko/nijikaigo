@@ -1,19 +1,18 @@
 p style="color: green" = notice
 
-h1.text-3xl.font-bold.mb-4
-  | 2次会GO！
-
 p.mb-4
   | 2次会GO！は、テック系イベントの二次会参加者を簡単に集めることができる、二次会参加者募集ツールです。
 
 .mb-4
-  = link_to '2次会グループを作成', new_group_path
-
-.mb-4
   - if logged_in?
-    = button_to 'ログアウト', logout_path, method: :delete
+    = link_to '2次会グループを作成',
+              new_group_path,
+              class: 'btn'
   - else
-    = button_to 'サインアップ / ログインをして2次会グループを作成', '/auth/github', data: { turbo: false }
+    = button_to 'サインアップ / ログインをして2次会グループを作成',
+                '/auth/github',
+                data: { turbo: false },
+                class: 'btn'
     span.text-xs
       | GitHubアカウントが必要です
 

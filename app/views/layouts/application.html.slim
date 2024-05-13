@@ -12,5 +12,7 @@ html
     link[href="https://cdn.jsdelivr.net/npm/daisyui@4.10.5/dist/full.min.css" rel="stylesheet" type="text/css"]
     script[src="https://cdn.tailwindcss.com"]
   body
-    main.container.mx-auto.mt-28.px-5
-      = yield
+    .container.mx-auto
+      = render 'application/header'
+      main
+        = yield
