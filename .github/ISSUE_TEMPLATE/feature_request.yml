@@ -7,18 +7,12 @@ body:
   - type: textarea
     attributes: 
       label: 機能の説明
-    validations:
-      required: true
   - type: textarea
     attributes: 
       label: 何故この機能が必要なのか
-    validations:
-      required: true
   - type: textarea
     attributes: 
       label: 完了条件
-    validations:
-      required: true
   - type: textarea
     attributes: 
       label: 参考
