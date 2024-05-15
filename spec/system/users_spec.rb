@@ -45,24 +45,43 @@ RSpec.describe 'Users', type: :system do
         expect(page).not_to have_css('.avatar img[src="https://example.com/testuser.png"]')
       end
     end
+  end
 
-    context 'when user logs out' do
-      it 'allows users to logout' do
-        visit root_path
-        expect(page).to have_content 'GitHubアカウントが必要です'
-        expect(page).not_to have_css('.avatar img[src="https://example.com/testuser.png"]')
+  describe 'user logout' do
+    it 'allows users to logout' do
+      visit root_path
+      expect(page).to have_content 'GitHubアカウントが必要です'
+      expect(page).not_to have_css('.avatar img[src="https://example.com/testuser.png"]')
 
-        click_button 'サインアップ / ログインをして2次会グループを作成'
-        expect(page).to have_current_path(new_group_path)
-        expect(page).to have_css('.avatar img[src="https://example.com/testuser.png"]')
+      click_button 'サインアップ / ログインをして2次会グループを作成'
+      expect(page).to have_current_path(new_group_path)
+      expect(page).to have_css('.avatar img[src="https://example.com/testuser.png"]')
 
-        find('.avatar').click
-        click_button 'ログアウト'
+      find('.avatar').click
+      click_button 'ログアウト'
+      expect(page).to have_current_path(root_path)
+      expect(page).to have_content 'ログアウトしました'
+      expect(page).to have_content 'GitHubアカウントが必要です'
+      expect(page).not_to have_css('.avatar img[src="https://example.com/testuser.png"]')
+    end
+  end
+
+  describe 'user account deletion' do
+    it 'allows users to delete their accounts' do
+      visit root_path
+      click_button 'サインアップ / ログインをして2次会グループを作成'
+      expect(page).to have_current_path(new_group_path)
+      expect(page).to have_css('.avatar img[src="https://example.com/testuser.png"]')
+
+      find('.avatar').click
+      expect do
+        accept_confirm do
+          click_button 'アカウント削除'
+        end
         expect(page).to have_current_path(root_path)
-        expect(page).to have_content 'ログアウトしました'
-        expect(page).to have_content 'GitHubアカウントが必要です'
+        expect(page).to have_content 'アカウントが削除されました'
         expect(page).not_to have_css('.avatar img[src="https://example.com/testuser.png"]')
-      end
+      end.to change(User, :count).by(-1)
     end
   end
 end

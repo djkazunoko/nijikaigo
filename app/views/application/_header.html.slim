@@ -11,5 +11,6 @@
             = image_tag(current_user.image_url)
         ul.mt-3.z-1.p-2.shadow.menu.menu-sm.dropdown-content.bg-base-100.rounded-box.w-52 tabindex="0"
           li
-            div
-              = button_to 'ログアウト', logout_path, method: :delete
+            = button_to 'ログアウト', logout_path, method: :delete
+          li
+            = button_to 'アカウント削除', retirements_path, data: { turbo_confirm: '本当に削除しますか？' }
